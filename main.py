@@ -12,6 +12,11 @@ file = st.file_uploader("Choose a file")
 if file:
     df = functions.generateDataFrame(file)
     try:
+        dayfirst = st.radio("Select Date Format in text file:",('dd-mm-yy', 'mm-dd-yy'))
+        if dayfirst=='dd-mm-yy':
+            dayfirst=True
+        else:
+            dayfirst=False
         users = functions.getUsers(df)
         users_s = st.sidebar.selectbox("Select User to View Analysis", users)
         selected_user=""
@@ -20,7 +25,7 @@ if file:
             selected_user = users_s
 
             st.title("Showing Reults for : " + selected_user)
-            df = functions.PreProcess(df)
+            df = functions.PreProcess(df,dayfirst)
             if selected_user != "Everyone":
                 df = df[df['User'] == selected_user]
             df, media_cnt, deleted_msgs_cnt, links_cnt, word_count, msg_count = functions.getStats(df)

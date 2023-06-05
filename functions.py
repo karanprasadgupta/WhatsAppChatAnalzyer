@@ -45,8 +45,8 @@ def getUsers(df):
     return users
 
 
-def PreProcess(df):
-    df['Date'] = pd.to_datetime(df['Date'], dayfirst=True)
+def PreProcess(df,dayf):
+    df['Date'] = pd.to_datetime(df['Date'], dayfirst=dayf)
     df['Time'] = pd.to_datetime(df['Time(U)']).dt.time
     df['year'] = df['Date'].apply(lambda x: int(str(x)[:4]))
     df['month'] = df['Date'].apply(lambda x: int(str(x)[5:7]))
